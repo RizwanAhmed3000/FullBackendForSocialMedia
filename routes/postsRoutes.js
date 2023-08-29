@@ -1,7 +1,10 @@
 import express from "express";
-import { createPost, updatePost, deletePost } from "../controllers/postsControllers.js";
+import { createPost, updatePost, deletePost, likePost, getPost } from "../controllers/postsControllers.js";
 
 const postsRoutes = express.Router();
+
+// get a post
+postsRoutes.get ('/:id', getPost);
 
 // create post
 postsRoutes.post ('/', createPost);
@@ -11,5 +14,8 @@ postsRoutes.put ('/:id', updatePost);
 
 // delete post
 postsRoutes.delete ('/:id', deletePost);
+
+// like post
+postsRoutes.put ('/:id/like', likePost);
 
 export default postsRoutes

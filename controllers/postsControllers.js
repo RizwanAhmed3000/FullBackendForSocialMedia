@@ -20,7 +20,7 @@ export const updatePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
         if (post.userId === req.body.userId) {
-            await post.updateOne({$set: req.body});
+            await post.updateOne({ $set: req.body });
             res.status(200).send({
                 status: 'Success',
                 message: 'Post updated'
@@ -54,6 +54,46 @@ export const deletePost = async (req, res) => {
                 message: 'You are not the author of this post'
             })
         }
+    } catch (error) {
+        res.status(500).send({
+            status: 'Failed',
+            message: error.message
+        })
+    }
+}
+
+export const likePost = async (req, res) => {
+    try {
+        const postToLike = await Post.findById(req.params.id);
+        if (!postToLike.likes.includes(req.body.userId)) {
+            await postToLike.updateOne({ $push: { likes: req.body.userId } })
+            res.status(200).send({
+                status: 'Success',
+                message: 'You like this post'
+            })
+        } else {
+            await postToLike.updateOne({ $pull: { likes: req.body.userId } })
+            res.status(200).send({
+                status: 'Success',
+                message: 'You dislike this post'
+            })
+        }
+    } catch (error) {
+        res.status(404).send({
+            status: 'Success',
+            message: error.message
+        })
+    }
+}
+
+export const getPost = async (req, res) =>{
+    try {
+        const post = await Post.findById(req.params.id);
+        res.status(200).send({
+            status: 'Success',
+            message: 'here is the post',
+            data: post
+        })
     } catch (error) {
         res.status(500).send({
             status: 'Failed',
