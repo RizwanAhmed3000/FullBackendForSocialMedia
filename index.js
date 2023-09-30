@@ -3,11 +3,13 @@ import mongooes from 'mongoose';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import usersRoutes from './routes/usersRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import postsRoutes from './routes/postsRoutes.js';
 
 const app = express();
+app.use(cors());
 const PORT = 8000;
 
 dotenv.config();

@@ -4,21 +4,21 @@ import { createPost, updatePost, deletePost, likePost, getPost, getTimeline } fr
 const postsRoutes = express.Router();
 
 // get a post
-postsRoutes.get ('/:id', getPost);
+postsRoutes.get('/:id', getPost);
 
 // create post
-postsRoutes.post ('/', createPost);
+postsRoutes.post('/', createPost);
 
 // update post
-postsRoutes.put ('/:id', updatePost);
+postsRoutes.put('/:id', updatePost);
 
 // delete post
-postsRoutes.delete ('/:id', deletePost);
+postsRoutes.delete('/:id', deletePost);
 
 // like post
-postsRoutes.put ('/:id/like', likePost);
+postsRoutes.put('/:id/like', likePost);
 
 // Timeline post
-postsRoutes.get('/timeline/all', getTimeline)
+postsRoutes.get('/timeline/:userId', getTimeline)
 
 export default postsRoutes
