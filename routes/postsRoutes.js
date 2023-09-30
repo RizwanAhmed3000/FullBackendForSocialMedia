@@ -1,5 +1,5 @@
 import express from "express";
-import { createPost, updatePost, deletePost, likePost, getPost } from "../controllers/postsControllers.js";
+import { createPost, updatePost, deletePost, likePost, getPost, getTimeline } from "../controllers/postsControllers.js";
 
 const postsRoutes = express.Router();
 
@@ -17,5 +17,8 @@ postsRoutes.delete ('/:id', deletePost);
 
 // like post
 postsRoutes.put ('/:id/like', likePost);
+
+// Timeline post
+postsRoutes.get('/timeline/all', getTimeline)
 
 export default postsRoutes

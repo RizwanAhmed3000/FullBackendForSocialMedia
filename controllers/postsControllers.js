@@ -1,4 +1,5 @@
 import { Post } from "../models/postModel.js";
+import { User } from "../models/usersModel.js";
 
 export const createPost = async (req, res) => {
     try {
@@ -86,13 +87,34 @@ export const likePost = async (req, res) => {
     }
 }
 
-export const getPost = async (req, res) =>{
+export const getPost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
         res.status(200).send({
             status: 'Success',
             message: 'here is the post',
             data: post
+        })
+    } catch (error) {
+        res.status(500).send({
+            status: 'Failed',
+            message: error.message
+        })
+    }
+}
+
+export const getTimeline = async (req, res) => {
+    try {
+        const currentUser = await User.findById(req.body.userId)
+        const userPost = await Post.find({ userId: currentUser._id })
+        const friendsPost = await Promise.all(
+            currentUser.followings.map(friendId => {
+                return Post.find({ userId: friendId })
+            })
+        )
+        res.status(200).send({
+            status: 'Success',
+            data: userPost.concat(...friendsPost)
         })
     } catch (error) {
         res.status(500).send({
